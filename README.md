@@ -60,9 +60,6 @@ example rows.
   what needs sign-off), Implementation Plan, **Failed Approaches** (never
   delete entries), and a usage guide by task size
 
-`skills/task-planning/project-templates/` holds an identical copy of these
-two files, bundled alongside the skill they support.
-
 ## How the pieces fit
 
 - **CLAUDE.md** = standing instructions Claude Code loads every session
