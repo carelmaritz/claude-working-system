@@ -1,13 +1,26 @@
 # Claude Working-System Bundle
 
-Everything from the 2026-07-02 session with Fable 5: three Claude Code skills,
-a collaboration contract, a per-task brief template, and the upgraded project
-task-tracking templates. Written to be model-agnostic — built for Opus 4.8,
-valid for whatever comes after.
+A set of Claude Code skills, a global CLAUDE.md, and project task-tracking
+templates. Written to be model-agnostic — built for Opus 4.8, valid for
+whatever comes after.
 
-## What goes where
+## What's in here
 
-### 1. `skills/` → `~/.claude/skills/`
+```
+CLAUDEdotMD/CLAUDE.md      → global Claude Code instructions
+skills/                    → three Claude Code skills
+project-templates/         → task-tracking templates for a project repo
+```
+
+### 1. `CLAUDEdotMD/CLAUDE.md` → `~/.claude/CLAUDE.md`
+
+Global Claude Code instructions — currently just the subagent policy
+(when to spawn agents, keep the main thread as orchestrator, model
+routing between cheap and full-strength tiers). Copy or merge into
+`~/.claude/CLAUDE.md` for instructions that apply to every project, or
+into a specific project's `CLAUDE.md` to scope it there.
+
+### 2. `skills/` → `~/.claude/skills/`
 
 Copy the three folders as-is (folder + SKILL.md inside):
 
@@ -18,31 +31,17 @@ cp -r skills/task-planning skills/code-quality-review skills/session-handover ~/
 Claude Code picks them up automatically. To scope a skill to a single project
 instead, place it in `<project>/.claude/skills/`.
 
-- `task-planning` — plan/decompose before executing; front-load risk; scope control
-- `code-quality-review` — producing code that survives review + reviewing code
-- `session-handover` — writing AND resuming handovers; defers to your
-  SESSION_HANDOVER.md / CLAUDE.md conventions
+- `task-planning` — classify before planning, restate goal + definition of
+  done, investigate before decomposing, front-load risk, declare scope
+  boundaries, know when to re-plan
+- `code-quality-review` — producing code that survives review (read the
+  neighborhood, keep diffs minimal, self-review pass before presenting) and
+  reviewing code (understand intent, big issues first, explicit verdict)
+- `session-handover` — writing AND resuming handovers: required sections
+  (current state, completed, next steps, open decisions, failed approaches,
+  landmines), reading discipline on resume
 
-### 2. `prompting/collaboration-contract.md` → standing context
-
-Two destinations, same content:
-
-- **Claude Code**: paste into `~/.claude/CLAUDE.md` (global, all projects) or a
-  specific project's `CLAUDE.md` (that project only). If you already have a
-  CLAUDE.md, append it as a section.
-- **Claude.ai**: paste into a Project's custom instructions.
-
-Defines the three-stage shape (Align → Execute → Close out), challenge-first
-default, `Mode:` and `Bar:` dials, honesty norms, and subagent policy.
-
-### 3. `prompting/task-brief-template.md` → wherever you draft messages
-
-Not installed anywhere — it's a fill-in skeleton you paste as the opening
-message of ad-hoc tasks. Keep it somewhere handy (notes app, snippets tool,
-or the project repo root). For work tracked in the task system below, the
-task file replaces this brief entirely.
-
-### 4. `project-templates/` → root of each new project repo
+### 3. `project-templates/` → root of each new project repo
 
 ```
 cp project-templates/TASKS.md project-templates/TASK_TEMPLATE.md <project-root>/
@@ -50,33 +49,36 @@ mkdir <project-root>/TASKS
 ```
 
 Then fill in the project overview placeholders in TASKS.md and delete the
-example rows. Upgrades in this version:
+example rows.
 
-- TASK_TEMPLATE.md: added **Out of Scope**, **Freedom** (agent decision
-  authority), and **Failed Approaches** (never delete entries) sections;
-  usage guide updated with the never-prune rule.
-- TASKS.md: added **Source of Truth** rule — task file is authority, tables
-  are index, both updated in the same commit.
+- `TASKS.md` — project-level task index: ID format, priority/effort/status
+  definitions, branch naming, and the **Source of Truth** rule (task file is
+  authority, the index table is a convenience view — both updated in the
+  same commit)
+- `TASK_TEMPLATE.md` — per-task file with Objective, Technical Requirements,
+  **Out of Scope**, **Freedom** (what the assigned agent may decide alone vs.
+  what needs sign-off), Implementation Plan, **Failed Approaches** (never
+  delete entries), and a usage guide by task size
+
+`skills/task-planning/project-templates/` holds an identical copy of these
+two files, bundled alongside the skill they support.
 
 ## How the pieces fit
 
-- **Skills** = the discipline (how Claude plans, reviews, hands over)
-- **Collaboration contract** = the relationship (staged collaboration,
-  challenge-first, honesty, agents)
-- **Task brief / task files** = the work itself (goal, done, boundaries,
-  freedom, dead ends)
+- **CLAUDE.md** = standing instructions Claude Code loads every session
+- **Skills** = the discipline (how Claude plans, reviews, hands over) — loaded
+  on demand when the task matches
+- **Task files** = the work itself (goal, done, boundaries, freedom, dead
+  ends), tracked per project
 
-A task file + the contract + the skills is a complete delegation package:
-an agent can pick up `TASKS/TASK-XXX.md` and work it safely without
-supervision.
+A task file plus the skills is a complete delegation package: an agent can
+pick up `TASKS/TASK-XXX.md` and work it safely without supervision.
 
 ## Maintenance notes
 
-- After a week or two on Opus, prune anything from the skills that the model
+- After a stretch on a given model, prune anything from the skills that it
   already does reliably unprompted — a skill restating default behaviour is
   context tax.
-- `Bar: exceptional` is a dial you spend, not a default. If everything is
-  exceptional, nothing is.
-- If you find yourself only filling in "Task" and "Done" in the brief
-  template, trim the template to what you actually use rather than
-  abandoning it.
+- If a task file only ever gets "Objective" and "Success Criteria" filled in
+  for your work, that's fine — the template's later sections are marked N/A
+  or removed per the usage guide, not mandatory ceremony.
