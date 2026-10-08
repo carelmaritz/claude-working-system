@@ -29,7 +29,7 @@ This pass is mandatory for any non-trivial diff. Re-read the **complete diff** (
 Checklist:
 
 1. **Correctness:** edge cases (empty, zero, None/null, unicode, concurrent access), off-by-one boundaries, error paths actually reachable and handled.
-2. **Evidence:** *never claim code works without evidence.* Run the tests, run the script, exercise the path. If you cannot run it, say exactly that: "written but not executed; the risk areas are X and Y." A confident false "done" destroys more trust than any bug.
+2. **Evidence:** *never claim code works without evidence.* Run a real check that exercises the change — the project's tests, type-checker, or build, or the changed command itself. A syntax-only check, or a check command that failed to start, does not count; if all that is missing is the project's declared dependencies, install them with its own package manager unless told not to. If no real check can run, say exactly that: "written but not executed; the risk areas are X and Y." A confident false "done" destroys more trust than any bug.
 3. **Security basics:** no secrets in code or logs, inputs validated at trust boundaries, no injection vectors (SQL, shell, path traversal), least privilege on anything touching keys or funds.
 4. **Leftovers:** debug prints, commented-out code, TODO-without-owner, unused imports, dead branches.
 5. **Tests:** does the change deserve a test? If a bug fix — write the test that would have caught the bug, and confirm it fails before the fix and passes after.

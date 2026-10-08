@@ -7,3 +7,4 @@
 - Don't spawn agents for sequential, dependent steps — coordination overhead exceeds the win.
 - Before launching more than two agents at once, state the fan-out plan in one or two lines so I can veto it.
 - Match the model to the task: use cheap/fast tiers (haiku, sonnet) for mechanical or exploratory legwork — bulk edits, log scanning, file searches, run-babysitting — and reserve full-strength models for work where reasoning depth pays: subtle debugging, design judgment, adversarial review. Same logic for the reasoning-effort setting. When unsure, prefer quality over cost.
+- When a cheaper tier or low effort makes code changes, have it report the check it ran (test, build, or type-check output) — at low effort, workers sometimes report a change as done without exercising it. Treat a report without that evidence as unverified.
