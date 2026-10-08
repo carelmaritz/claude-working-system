@@ -1,8 +1,8 @@
 # Claude Working-System Bundle
 
 A set of Claude Code skills, a global CLAUDE.md, and project task-tracking
-templates. Written to be model-agnostic — built for Opus 4.8, valid for
-whatever comes after.
+templates. Written to be model-agnostic; last reviewed against the Claude
+5.5 family (Opus, Sonnet, Haiku 5.5).
 
 ## What's in here
 

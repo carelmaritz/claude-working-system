@@ -1,6 +1,6 @@
 ---
 name: session-handover
-description: Preserve and restore working context across session boundaries — end of a session, approaching context limits, model transitions, or any long-horizon task that will outlive the current conversation. Use this skill whenever a session is winding down with unfinished work, whenever the user mentions handover, continuity, SESSION_HANDOVER, or resuming later, and at the START of any session where a handover document exists — reading one correctly matters as much as writing one.
+description: Preserve and restore working context across session boundaries — end of a session, model transitions, or any long-horizon task that will outlive the current conversation. Use this skill whenever a session is winding down with unfinished work, whenever the user mentions handover, continuity, SESSION_HANDOVER, or resuming later, and at the START of any session where a handover document exists — reading one correctly matters as much as writing one.
 ---
 
 # Session Handover
@@ -13,7 +13,7 @@ The test of a good handover: the next session reaches productive work within its
 
 ### When to write
 
-- **Proactively**, when context is filling up or the session is clearly longer than the task's remaining life. Do not wait until the last message — a handover written under pressure while context is being truncated is exactly when quality collapses.
+- **Proactively**, when the work will clearly outlive this session — before the user signs off, before a model switch, or before parking a task. Within a session, the harness compacts context automatically, so a filling context window is not by itself a reason to hand over or wrap up early.
 - **At any natural checkpoint** in long-horizon work (a merged PR, a resolved design decision), update the standing handover file rather than rewriting it from scratch at the end.
 - **On request**, obviously.
 
@@ -21,7 +21,7 @@ If the project has an established convention (e.g. `SESSION_HANDOVER.md`, `CLAUD
 
 ### Required content
 
-ALWAYS cover these sections, in this order:
+Cover these sections, in this order — a fixed shape is what lets the next session parse it fast:
 
 ```markdown
 # Session Handover — [date] [one-line task description]
